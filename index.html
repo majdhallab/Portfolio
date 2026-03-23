@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Majd Hallab — Project Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F4EF;
+      --ink:   #1A1814;
+      --muted: #8A8479;
+      --accent:#C8A96E;
+      --line:  #E2DDD6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      animation: fadeDown .6s ease both;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      font-size: .85rem; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+    }
+    .hero-tag {
+      font-size: .85rem; letter-spacing: .18em; text-transform: uppercase;
+      font-weight: 500; color: var(--accent); margin-bottom: 1.2rem;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1.05; font-weight: 400; max-width: 14ch;
+      animation: fadeUp .7s .35s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      margin-top: 2rem; max-width: 38ch;
+      color: var(--muted); font-size: 1.05rem;
+      animation: fadeUp .7s .5s ease both;
+    }
+    .hero-cta {
+      margin-top: 2.8rem; display: flex; gap: 1.2rem; align-items: center;
+      animation: fadeUp .7s .65s ease both;
+    }
+    .btn {
+      display: inline-block; padding: .75rem 2rem;
+      font-size: .85rem; font-weight: 500;
+      letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all .25s;
+    }
+    .btn-primary { background: var(--ink); color: var(--cream); }
+    .btn-primary:hover { background: #2e2b26; }
+    .btn-ghost { color: var(--muted); border-bottom: 1px solid var(--line); }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+    .hero-scroll {
+      position: absolute; right: 4rem; bottom: 5rem;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: var(--muted); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      animation: fadeUp .7s .8s ease both;
+    }
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    /* SECTIONS */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-size: 1rem; letter-spacing: .18em; text-transform: uppercase;
+      font-weight: 500; color: var(--accent); margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent);
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem;
+    }
+
+    /* ABOUT */
+    .about { border-top: 1px solid var(--line); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+    .about-left h2 { max-width: 12ch; }
+    .about-right p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1.05rem; }
+    .about-right p strong { color: var(--ink); font-weight: 500; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; margin-top: 3rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem; color: var(--ink); line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); margin-top: .4rem;
+    }
+
+    /* IMPACT */
+    .impact { border-top: 1px solid var(--line); }
+    .impact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .impact-card {
+      padding: 2rem; border: 1px solid var(--line);
+      border-radius: 2px; transition: border-color .25s;
+    }
+    .impact-card:hover { border-color: var(--accent); }
+    .impact-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem; font-weight: 400; margin-bottom: .5rem;
+    }
+    .impact-card p { color: var(--muted); font-size: .95rem; line-height: 1.6; }
+
+    /* SERVICES */
+    .services { border-top: 1px solid var(--line); background: var(--ink); color: var(--cream); }
+    .services .section-label { color: var(--accent); }
+    .services .section-label::after { background: var(--accent); }
+    .services h2 { color: var(--cream); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-top: 3.5rem; border: 1px solid #2e2b26;
+    }
+    .service-card { padding: 2.5rem; border-right: 1px solid #2e2b26; transition: background .25s; }
+    .service-card:last-child { border-right: none; }
+    .service-card:hover { background: #232019; }
+    .service-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--accent); margin-bottom: 1.5rem; line-height: 1;
+    }
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; font-weight: 400; margin-bottom: .8rem; color: var(--cream);
+    }
+    .service-card p { color: #8A8479; font-size: .95rem; line-height: 1.65; }
+
+    /* PROJECTS */
+    .projects { border-top: 1px solid var(--line); }
+    .projects-list { margin-top: 3rem; }
+    .project-item {
+      display: grid; grid-template-columns: 120px 1fr auto;
+      align-items: center; gap: 2.5rem;
+      padding: 2rem 0; border-bottom: 1px solid var(--line);
+      cursor: default; transition: padding-left .25s;
+    }
+    .project-item:first-child { border-top: 1px solid var(--line); }
+    .project-item:hover { padding-left: 1rem; }
+    .project-year { font-size: .8rem; letter-spacing: .1em; color: var(--muted); }
+    .project-name { font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; }
+    .project-tag {
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: .3rem .8rem; border-radius: 2px; white-space: nowrap;
+    }
+
+    /* CERTIFICATIONS */
+    .certifications { border-top: 1px solid var(--line); }
+    .cert-list { margin-top: 3rem; }
+    .cert-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.6rem 0; border-bottom: 1px solid var(--line);
+      transition: padding-left .25s;
+    }
+    .cert-item:first-child { border-top: 1px solid var(--line); }
+    .cert-item:hover { padding-left: 1rem; }
+    .cert-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem; font-weight: 400;
+    }
+    .cert-issuer {
+      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: .3rem .8rem; border-radius: 2px;
+    }
+
+    /* CONTACT */
+    .contact { border-top: 1px solid var(--line); text-align: center; }
+    .contact h2 { font-size: clamp(2.5rem, 5vw, 4rem); max-width: 16ch; margin: 0 auto 2rem; }
+    .contact p { color: var(--muted); max-width: 36ch; margin: 0 auto 3rem; }
+    .contact-email {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--line); padding-bottom: .3rem;
+      transition: border-color .25s; display: inline-block; margin-bottom: 3.5rem;
+    }
+    .contact-email:hover { border-color: var(--accent); color: var(--accent); }
+    .socials { display: flex; justify-content: center; gap: 2rem; }
+    .socials a {
+      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color .25s;
+    }
+    .socials a:hover { color: var(--ink); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .8rem; color: var(--muted);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.4rem; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 0 1.5rem 4rem; }
+      .hero-scroll { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .impact-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid #2e2b26; }
+      .project-item { grid-template-columns: 80px 1fr; }
+      .project-tag { display: none; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">MH</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-tag">Project Manager &amp; Strategist</p>
+    <h1>Orchestrating projects for <em>seamless</em> execution.</h1>
+    <p class="hero-sub">Building and scaling impactful solutions across humanitarian and business sectors, from strategy to results.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#contact">Get in touch</a>
+      <a class="btn btn-ghost" href="#projects">View projects</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-label reveal">About</div>
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <h2>Majd Hallab</h2>
+      </div>
+      <div class="about-right reveal">
+        <p>Development and programs professional with <strong>9+ years of experience</strong> leading program portfolios, donor engagement, and organizational growth within NGOs. Experienced in contributing to revenue diversification initiatives, coordinating across departments, and translating organizational strategy into practical systems and results.</p>
+        <p>Brings an interdepartmental working style, collaborating closely with programs, operations, and communications to strengthen sustainability and impact.</p>
+        <div class="stats">
+          <div>
+            <div class="stat-num">40K+</div>
+            <div class="stat-label">Children supported</div>
+          </div>
+          <div>
+            <div class="stat-num">130+</div>
+            <div class="stat-label">Schools covered</div>
+          </div>
+          <div>
+            <div class="stat-num">$20.6M</div>
+            <div class="stat-label">Projects secured</div>
+          </div>
+          <div>
+            <div class="stat-num">9+</div>
+            <div class="stat-label">Years experience</div>
+          </div>
+          <div>
+            <div class="stat-num">70+</div>
+            <div class="stat-label">Staff led</div>
+          </div>
+          <div>
+            <div class="stat-num">25+</div>
+            <div class="stat-label">Ventures managed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="impact" id="impact">
+    <div class="section-label reveal">Key initiatives</div>
+    <h2 class="reveal">Work that makes a difference.</h2>
+    <div class="impact-grid reveal">
+      <div class="impact-card">
+        <h3>Emergency Food Response, Tripoli</h3>
+        <p>Rapid deployment of food assistance to displaced and vulnerable families during crisis periods.</p>
+      </div>
+      <div class="impact-card">
+        <h3>School Feeding Expansion Program</h3>
+        <p>Scaling access to daily meals for children in underserved public schools across North Lebanon.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Community Kitchen Support Initiative</h3>
+        <p>Establishing and operating local kitchens to provide hot meals and create community engagement.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Winterization and Shelter Support</h3>
+        <p>Providing essential items and support to families affected by harsh seasonal conditions.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Local Capacity Strengthening Program</h3>
+        <p>Training and supporting grassroots organizations to deliver accountable and sustainable responses.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Multi-Sector Business Ventures</h3>
+        <p>Leading and managing ventures across construction, food services, and local businesses in Lebanon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-label reveal">What I offer</div>
+    <h2 class="reveal">Services built around your goals.</h2>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Freelancing</h3>
+        <p>End-to-end project management for organizations and businesses, covering scoping, planning, execution, and delivery on time and on budget.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Consulting</h3>
+        <p>Strategic advisory for NGOs, startups, and businesses navigating complexity, including operational design, stakeholder alignment, and program scale-up.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Training and Coaching</h3>
+        <p>Practical workshops and one-on-one coaching for project managers and team leads looking to sharpen their execution and leadership skills.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="section-label reveal">Selected work</div>
+    <h2 class="reveal">Projects I'm proud of.</h2>
+    <div class="projects-list">
+      <div class="project-item reveal">
+        <span class="project-year">2025 / 26</span>
+        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
+        <span class="project-tag">Humanitarian</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2024 / 25</span>
+        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
+        <span class="project-tag">Humanitarian</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2023 / 24</span>
+        <span class="project-name">In-Kind Assistance Program</span>
+        <span class="project-tag">Food Aid</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2022 / 23</span>
+        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
+        <span class="project-tag">Humanitarian</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2022 / 23</span>
+        <span class="project-name">In-Kind Assistance Program</span>
+        <span class="project-tag">Food Aid</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2021 / 22</span>
+        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
+        <span class="project-tag">Humanitarian</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2021 / 22</span>
+        <span class="project-name">In-Kind Assistance Program</span>
+        <span class="project-tag">Food Aid</span>
+      </div>
+      <div class="project-item reveal">
+        <span class="project-year">2020 / 21</span>
+        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
+        <span class="project-tag">Humanitarian</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="certifications" id="certifications">
+    <div class="section-label reveal">Certifications</div>
+    <h2 class="reveal">Credentials and training.</h2>
+    <div class="cert-list reveal">
+      <div class="cert-item">
+        <span class="cert-name">Project Management Professional (PMP)</span>
+        <span class="cert-issuer">PMI · No. 4321360</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">Registered Engineer</span>
+        <span class="cert-issuer">Order of Engineers, Tripoli · #11962</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">First Aid and Emergency Response</span>
+        <span class="cert-issuer">Certified</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">Google AI Essentials</span>
+        <span class="cert-issuer">Google</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">Claude 101</span>
+        <span class="cert-issuer">Anthropic</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">Member, Institution of Structural Engineers</span>
+        <span class="cert-issuer">IStructE</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-name">Member, American Society of Civil Engineers</span>
+        <span class="cert-issuer">ASCE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-label reveal" style="justify-content:center">Contact</div>
+    <h2 class="reveal">Have a project in mind?</h2>
+    <p class="reveal">I'm open to new opportunities, collaborations, and meaningful conversations.</p>
+    <a class="contact-email reveal" href="mailto:hallabmajd@gmail.com">hallabmajd@gmail.com</a>
+    <div class="socials reveal">
+      <a href="https://www.linkedin.com/in/hallabm/" target="_blank">LinkedIn</a>
+      <a href="https://wa.me/009613145013" target="_blank">WhatsApp</a>
+      <a href="Majd_Hallab_CV.pdf" download>CV / Resume</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Majd Hallab</span>
+    <span>Project Manager · Lebanon</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
