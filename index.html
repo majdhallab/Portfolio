@@ -733,23 +733,25 @@
       var el = document.getElementById('typingIndicator');
       if (el) el.remove();
     }
-  </script>
+
+    function openMobile() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
     function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
 
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) {
-          e.target.classList.add("visible");
+          e.target.classList.add('visible');
           observer.unobserve(e.target);
         }
       });
     }, { threshold: 0.1 });
-    document.querySelectorAll(".reveal").forEach(function(el) {
+    document.querySelectorAll('.reveal').forEach(function(el) {
       observer.observe(el);
     });
-    var el = document.getElementById("email-link");
-    el.href = "mai" + "lto:hallabmajd" + "@" + "gmail.com";
-    el.textContent = "hallabmajd" + "@" + "gmail.com";
+
+    var emailEl = document.getElementById('email-link');
+    emailEl.href = 'mai' + 'lto:hallabmajd' + '@' + 'gmail.com';
+    emailEl.textContent = 'hallabmajd' + '@' + 'gmail.com';
   </script>
 
 </body>
