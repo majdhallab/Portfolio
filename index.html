@@ -613,11 +613,7 @@
       <button class="chat-suggestion" onclick="sendSuggestion(this)">What is Warshati?</button>
     </div>
 
-    <div id="chatSetup" class="chat-setup" style="display:none">
-      <p>To activate the AI, enter your <strong>Anthropic API key</strong>. Get one free at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Your key is stored only in this browser.</p>
-      <input type="password" id="apiKeyInput" placeholder="sk-ant-..."/>
-      <button onclick="saveApiKey()">Activate AI Chat</button>
-    </div>
+    <div id="chatSetup" style="display:none"></div>
 
     <div class="chat-input-row" id="chatInputRow">
       <input class="chat-input" id="chatInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendMessage()"/>
@@ -633,38 +629,14 @@
 
     var chatOpen = false;
     var chatHistory = [];
-    var apiKey = localStorage.getItem('majd_chat_key') || '';
 
     function toggleChat() {
       chatOpen = !chatOpen;
       document.getElementById('chatWindow').classList.toggle('open', chatOpen);
       if (chatOpen) {
         document.querySelector('.chat-ping').style.display = 'none';
-        if (!apiKey) showSetup(); else hideSetup();
         setTimeout(function(){ document.getElementById('chatInput').focus(); }, 300);
       }
-    }
-
-    function showSetup() {
-      document.getElementById('chatSetup').style.display = 'flex';
-      document.getElementById('chatSetup').style.flexDirection = 'column';
-      document.getElementById('chatInputRow').style.display = 'none';
-      document.getElementById('chatSuggestions').style.display = 'none';
-    }
-
-    function hideSetup() {
-      document.getElementById('chatSetup').style.display = 'none';
-      document.getElementById('chatInputRow').style.display = 'flex';
-      document.getElementById('chatSuggestions').style.display = 'flex';
-    }
-
-    function saveApiKey() {
-      var key = document.getElementById('apiKeyInput').value.trim();
-      if (!key.startsWith('sk-ant-')) { alert('Please enter a valid Anthropic API key starting with sk-ant-'); return; }
-      apiKey = key;
-      localStorage.setItem('majd_chat_key', key);
-      hideSetup();
-      addMessage('bot', 'API key saved! Ask me anything about Majd.');
     }
 
     function sendSuggestion(btn) {
@@ -682,17 +654,14 @@
     }
 
     function sendMessageText(text) {
-      if (!apiKey) { showSetup(); return; }
       addMessage('user', text);
       showTyping();
       chatHistory.push({ role: 'user', content: text });
 
-      fetch('https://api.anthropic.com/v1/messages', {
+      fetch('https://lively-tree-afff.majdhallab13.workers.dev', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 300,
           system: MAJD_CONTEXT,
           messages: chatHistory
         })
