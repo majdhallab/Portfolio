@@ -43,6 +43,13 @@
     .dropdown-menu li a { display: block; padding: .6rem 1.2rem; font-size: .85rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s, background .2s; }
     .dropdown-menu li a:hover { color: var(--ink); background: var(--line); }
     .nav-dropdown:hover .dropdown-menu { display: block; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); transition: all .3s; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 999; flex-direction: column; justify-content: center; align-items: center; gap: 2rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'DM Serif Display', serif; font-size: 1.8rem; font-weight: 400; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--ink); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--ink); font-size: 2rem; cursor: pointer; line-height: 1; }
 
     /* HERO */
     .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 380px; align-items: center; padding: 7rem 4rem 5rem; position: relative; gap: 4rem; }
@@ -157,24 +164,45 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       nav { padding: 1.2rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
       section { padding: 5rem 1.5rem; }
       .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 2rem; }
       .hero-photo { order: -1; }
-      .hero-photo img { width: 200px; height: 200px; }
+      .hero-photo img { width: 180px; height: 180px; }
+      .hero-name { font-size: 1.5rem; }
       .hero-scroll { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .impact-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
       .service-card { border-right: none; border-bottom: 1px solid #2e2b26; }
-      .project-item { grid-template-columns: 60px 1fr; }
+      .project-item { grid-template-columns: 80px 1fr; }
       .project-tag { display: none; }
+      .contact-form { padding: 0 0.5rem; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="closeMobile()">&#215;</button>
+    <a href="#about" onclick="closeMobile()">About</a>
+    <a href="#impact" onclick="closeMobile()">Impact</a>
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#projects" onclick="closeMobile()">Projects</a>
+    <a href="#education" onclick="closeMobile()">Education</a>
+    <a href="certifications.html" onclick="closeMobile()">Certifications</a>
+    <a href="psea.html" onclick="closeMobile()">PSEA</a>
+    <a href="warshati.html" onclick="closeMobile()">Warshati</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -197,6 +225,9 @@
       </li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="hamburger" onclick="openMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -415,20 +446,23 @@
   </footer>
 
   <script>
+    function openMobile() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) {
-          e.target.classList.add('visible');
+          e.target.classList.add("visible");
           observer.unobserve(e.target);
         }
       });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(function(el) {
+    document.querySelectorAll(".reveal").forEach(function(el) {
       observer.observe(el);
     });
-    var el = document.getElementById('email-link');
-    el.href = 'mai' + 'lto:hallabmajd' + '@' + 'gmail.com';
-    el.textContent = 'hallabmajd' + '@' + 'gmail.com';
+    var el = document.getElementById("email-link");
+    el.href = "mai" + "lto:hallabmajd" + "@" + "gmail.com";
+    el.textContent = "hallabmajd" + "@" + "gmail.com";
   </script>
 
 </body>
