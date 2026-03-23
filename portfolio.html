@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Project Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F2;
+    --ink: #1A1814;
+    --muted: #7A776F;
+    --accent: #C8873A;
+    --line: #E2DED8;
+    --card: #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+    background: rgba(247,245,242,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: .02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 10rem 5vw 6rem;
+    max-width: 900px;
+    opacity: 0; animation: fadeUp .8s ease forwards .1s;
+  }
+  .hero-tag {
+    font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: .7rem;
+  }
+  .hero-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -.01em;
+    margin-bottom: 1.6rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p {
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 2.8rem;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--ink); color: var(--bg);
+    text-decoration: none;
+    padding: .85rem 2rem;
+    font-size: .85rem; letter-spacing: .06em; text-transform: uppercase;
+    transition: background .2s, transform .15s;
+  }
+  .btn:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--ink);
+    margin-left: 1rem;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--bg); }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 5vw;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  section.visible { opacity: 1; transform: none; }
+
+  .section-label {
+    font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .8rem;
+    display: flex; align-items: center; gap: .7rem;
+  }
+  .section-label::before { content: ''; display: block; width: 1.4rem; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.15;
+    margin-bottom: 3rem;
+    max-width: 520px;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: start;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1.2rem; }
+  .about-stats { display: flex; flex-direction: column; gap: 1.4rem; }
+  .stat {
+    padding: 1.6rem 2rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem; color: var(--accent);
+  }
+  .stat-label { font-size: .85rem; color: var(--muted); letter-spacing: .04em; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.6rem; }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 2rem;
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.07); }
+  .project-tag {
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; margin-bottom: .8rem;
+  }
+  .project-card p { color: var(--muted); font-size: .9rem; }
+  .project-meta {
+    margin-top: 1.6rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .pill {
+    font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+    padding: .3rem .8rem;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .skill-group {
+    background: var(--card); border: 1px solid var(--line);
+    padding: 1.8rem 2rem;
+  }
+  .skill-group h4 {
+    font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.2rem;
+  }
+  .skill-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+  .skill-list li {
+    display: flex; align-items: center; gap: .7rem;
+    color: var(--muted); font-size: .9rem;
+  }
+  .skill-list li::before { content: '—'; color: var(--line); flex-shrink: 0; }
+
+  /* CONTACT */
+  .contact-inner {
+    max-width: 600px;
+    background: var(--ink); padding: 4rem;
+    color: var(--bg);
+  }
+  .contact-inner .section-label { color: var(--accent); }
+  .contact-inner .section-title { color: var(--bg); margin-bottom: 1.2rem; }
+  .contact-inner p { color: rgba(247,245,242,.6); margin-bottom: 2.4rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; justify-content: space-between;
+    text-decoration: none;
+    color: var(--bg);
+    padding: 1rem 1.4rem;
+    border: 1px solid rgba(255,255,255,.1);
+    font-size: .9rem;
+    transition: border-color .2s, background .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); background: rgba(200,135,58,.08); }
+  .contact-link span { color: var(--accent); font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 5vw;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .8rem; color: var(--muted);
+    opacity: 0; animation: fadeUp .6s ease forwards 1s;
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--line); margin: 0 5vw; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 680px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .contact-inner { padding: 2.4rem; }
+    .btn-outline { margin-left: 0; margin-top: .8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Project Manager</div>
+  <h1>Turning complexity<br>into <em>clarity.</em></h1>
+  <p>I plan, coordinate, and deliver projects that matter — on time, within scope, and built to last.</p>
+  <div>
+    <a href="#projects" class="btn">View Projects ↓</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+</div>
+
+<hr>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <h2 class="section-title">Driven by outcomes, grounded in process.</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a project manager with a passion for organizing chaos into structured, achievable goals. I work closely with cross-functional teams to align stakeholders, manage timelines, and deliver results that actually move the needle.</p>
+      <p>Whether it's an agile sprint or a multi-year initiative, I bring clarity, accountability, and a calm head under pressure to every project I lead.</p>
+      <p>Based in Lebanon — open to remote and international opportunities.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">On-Time Delivery Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <h2 class="section-title">Selected projects & initiatives.</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-tag">Infrastructure · 2024</div>
+      <h3>Office Relocation Program</h3>
+      <p>Led end-to-end coordination of a 200-person office move, managing vendors, timelines, and zero-downtime transition plans across 3 departments.</p>
+      <div class="project-meta">
+        <span class="pill">Logistics</span>
+        <span class="pill">Stakeholder Mgmt</span>
+        <span class="pill">Risk Planning</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">Digital · 2023</div>
+      <h3>CRM System Rollout</h3>
+      <p>Managed adoption of a new CRM platform across sales and support teams — delivered 3 weeks ahead of schedule with 95% user adoption in the first month.</p>
+      <div class="project-meta">
+        <span class="pill">Change Mgmt</span>
+        <span class="pill">Agile</span>
+        <span class="pill">Training</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">Operations · 2022</div>
+      <h3>Process Optimization Initiative</h3>
+      <p>Identified and eliminated workflow bottlenecks across procurement and HR, reducing average process time by 40% and saving 120+ staff hours per month.</p>
+      <div class="project-meta">
+        <span class="pill">Lean</span>
+        <span class="pill">Process Design</span>
+        <span class="pill">Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">What I bring to every project.</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <h4>Project Methodologies</h4>
+      <ul class="skill-list">
+        <li>Agile / Scrum</li>
+        <li>Waterfall</li>
+        <li>Hybrid Frameworks</li>
+        <li>Lean / Six Sigma</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Tools & Platforms</h4>
+      <ul class="skill-list">
+        <li>Jira & Confluence</li>
+        <li>Microsoft Project</li>
+        <li>Asana / Trello</li>
+        <li>Excel & Power BI</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Core Competencies</h4>
+      <ul class="skill-list">
+        <li>Stakeholder Communication</li>
+        <li>Risk & Issue Management</li>
+        <li>Budget & Resource Planning</li>
+        <li>Team Leadership</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Certifications</h4>
+      <ul class="skill-list">
+        <li>PMP (PMI)</li>
+        <li>Certified Scrum Master</li>
+        <li>PRINCE2 Practitioner</li>
+        <li>Google Project Mgmt</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's work together.</h2>
+    <p>Have a project that needs structure? I'd love to hear about it.</p>
+    <div class="contact-links">
+      <a href="mailto:yourname@email.com" class="contact-link">
+        yourname@email.com <span>→</span>
+      </a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+        LinkedIn Profile <span>→</span>
+      </a>
+      <a href="#" class="contact-link">
+        Download CV <span>↓</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Your Name</span>
+  <span>Project Manager</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const sections = document.querySelectorAll('section');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
