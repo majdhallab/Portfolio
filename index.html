@@ -56,9 +56,21 @@
     /* HERO */
     .hero {
       min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
+      display: grid; grid-template-columns: 1fr 420px;
+      align-items: center;
       padding: 7rem 4rem 5rem;
       position: relative;
+      gap: 4rem;
+    }
+    .hero-text {}
+    .hero-photo {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo img {
+      width: 340px; height: 340px;
+      object-fit: cover; object-position: center top;
+      border-radius: 4px;
+      filter: grayscale(15%);
     }
     .hero-name {
       font-family: 'DM Serif Display', serif;
@@ -326,7 +338,9 @@
       nav { padding: 1.2rem 1.5rem; }
       .nav-links { gap: 1.4rem; }
       section { padding: 5rem 1.5rem; }
-      .hero { padding: 0 1.5rem 4rem; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 2rem; }
+      .hero-photo { order: -1; }
+      .hero-photo img { width: 200px; height: 200px; }
       .hero-scroll { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
@@ -365,13 +379,18 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="hero-name reveal">Majd Hallab</p>
-    <p class="hero-tag">Project Manager &amp; Strategist</p>
-    <h1>Orchestrating projects for <em>seamless</em> execution.</h1>
-    <p class="hero-sub">Building and scaling impactful solutions across humanitarian and business sectors, from strategy to results.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#contact">Get in touch</a>
-      <a class="btn btn-ghost" href="#projects">View projects</a>
+    <div class="hero-text">
+      <p class="hero-name">Majd Hallab</p>
+      <p class="hero-tag">Project Manager &amp; Strategist</p>
+      <h1>Orchestrating projects for <em>seamless</em> execution.</h1>
+      <p class="hero-sub">Building and scaling impactful solutions across humanitarian and business sectors, from strategy to results.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-ghost" href="#projects">View projects</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="majd-photo.jpg" alt="Majd Hallab"/>
     </div>
     <div class="hero-scroll">Scroll</div>
   </section>
