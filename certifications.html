@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certifications - Majd Hallab</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231A1814'/><text x='50' y='68' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23F7F4EF' text-anchor='middle'>MH</text></svg>"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F7F4EF;
+      --ink:   #1A1814;
+      --muted: #8A8479;
+      --accent:#C8A96E;
+      --line:  #E2DDD6;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 4rem; background: var(--cream); border-bottom: 1px solid var(--line); }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: .85rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .25s; display: flex; align-items: center; gap: .5rem; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back::before { content: '←'; }
+
+    /* PAGE HERO */
+    .page-hero { padding: 12rem 4rem 6rem; border-bottom: 1px solid var(--line); }
+    .page-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 4.5vw, 4rem); font-weight: 400; line-height: 1.1; max-width: 22ch; animation: fadeUp .7s .1s ease both; }
+    .page-hero p { margin-top: 1.8rem; max-width: 56ch; color: var(--muted); font-size: 1.05rem; animation: fadeUp .7s .2s ease both; }
+
+    /* SECTIONS */
+    section { padding: 6rem 4rem; border-top: 1px solid var(--line); }
+    .section-label { font-size: 1rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 500; color: var(--accent); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; }
+    .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); }
+    h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; line-height: 1.15; margin-bottom: 2rem; }
+
+    /* CERT LIST */
+    .cert-list { margin-top: 3rem; }
+    .cert-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.8rem 0; border-bottom: 1px solid var(--line);
+      transition: padding-left .25s; gap: 2rem;
+    }
+    .cert-item:first-child { border-top: 1px solid var(--line); }
+    .cert-item:hover { padding-left: 1rem; }
+    .cert-info { display: flex; align-items: center; gap: 1.8rem; flex: 1; }
+    .cert-thumb {
+      width: 80px; height: 56px;
+      object-fit: cover; border-radius: 2px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      flex-shrink: 0;
+    }
+    .cert-thumb:hover { transform: scale(1.06); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .cert-no-thumb { width: 80px; height: 56px; flex-shrink: 0; }
+    .cert-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; font-weight: 400; }
+    .cert-issuer { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: .3rem .8rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(26, 24, 20, 0.92);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 88vh;
+      border-radius: 4px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.5);
+      animation: zoomIn .2s ease;
+    }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      color: #F7F4EF; font-size: 2rem; cursor: pointer;
+      font-weight: 300; line-height: 1;
+      opacity: .7; transition: opacity .2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    /* FOOTER */
+    footer { padding: 2rem 4rem; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: var(--muted); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .page-hero { padding: 9rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .cert-item { flex-wrap: wrap; }
+      .cert-issuer { margin-top: .5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&#215;</span>
+    <img id="lightbox-img" src="" alt="Certificate"/>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">MH</a>
+    <a class="nav-back" href="index.html">Back to portfolio</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>Certifications and Memberships</h1>
+    <p>Professional credentials, licenses, and organizational memberships underpinning my practice.</p>
+  </div>
+
+  <!-- PROFESSIONAL CERTIFICATIONS -->
+  <section>
+    <div class="section-label reveal">Professional</div>
+    <h2 class="reveal">Credentials and training.</h2>
+    <div class="cert-list reveal">
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <img class="cert-thumb" src="cert-pmp.jpeg" alt="PMP Certificate" onclick="openLightbox('cert-pmp.jpeg')"/>
+          <span class="cert-name">Project Management Professional (PMP)</span>
+        </div>
+        <span class="cert-issuer">PMI, No. 4321360</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <div class="cert-no-thumb"></div>
+          <span class="cert-name">Registered Engineer</span>
+        </div>
+        <span class="cert-issuer">Order of Engineers, Tripoli, No. 11962</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <div class="cert-no-thumb"></div>
+          <span class="cert-name">First Aid and Emergency Response</span>
+        </div>
+        <span class="cert-issuer">Certified</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <img class="cert-thumb" src="cert-google.jpg" alt="Google AI Essentials Certificate" onclick="openLightbox('cert-google.jpg')"/>
+          <span class="cert-name">Introduction to AI</span>
+        </div>
+        <span class="cert-issuer">Google, via Coursera</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <img class="cert-thumb" src="cert-claude.jpg" alt="Claude 101 Certificate" onclick="openLightbox('cert-claude.jpg')"/>
+          <span class="cert-name">Claude 101</span>
+        </div>
+        <span class="cert-issuer">Anthropic</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MEMBERSHIPS -->
+  <section>
+    <div class="section-label reveal">Memberships</div>
+    <h2 class="reveal">Professional bodies.</h2>
+    <div class="cert-list reveal">
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <div class="cert-no-thumb"></div>
+          <span class="cert-name">Member, Institution of Structural Engineers</span>
+        </div>
+        <span class="cert-issuer">IStructE</span>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-info">
+          <div class="cert-no-thumb"></div>
+          <span class="cert-name">Member, American Society of Civil Engineers</span>
+        </div>
+        <span class="cert-issuer">ASCE</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>2026 Majd Hallab</span>
+    <span>Project Manager, Lebanon</span>
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>
