@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PSEA — Majd Hallab</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F4EF;
+      --ink:   #1A1814;
+      --muted: #8A8479;
+      --accent:#C8A96E;
+      --line:  #E2DDD6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem; color: var(--ink); text-decoration: none;
+    }
+    .nav-back {
+      font-size: .85rem; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .25s;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back::before { content: '←'; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 12rem 4rem 6rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .page-tag {
+      font-size: .85rem; letter-spacing: .18em; text-transform: uppercase;
+      font-weight: 500; color: var(--accent); margin-bottom: 1.2rem;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .page-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      font-weight: 400; line-height: 1.1; max-width: 22ch;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .page-hero p {
+      margin-top: 1.8rem; max-width: 56ch;
+      color: var(--muted); font-size: 1.05rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 4rem; border-top: 1px solid var(--line); }
+    .section-label {
+      font-size: 1rem; letter-spacing: .18em; text-transform: uppercase;
+      font-weight: 500; color: var(--accent); margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent);
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.15; margin-bottom: 2rem;
+    }
+    .body-text { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.2rem; max-width: 64ch; }
+    .body-text strong { color: var(--ink); font-weight: 500; }
+
+    /* CONTENT GRID */
+    .content-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .content-card {
+      padding: 2rem; border: 1px solid var(--line);
+      border-radius: 2px; transition: border-color .25s;
+    }
+    .content-card:hover { border-color: var(--accent); }
+    .content-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem; font-weight: 400; margin-bottom: .6rem; color: var(--ink);
+    }
+    .content-card p { color: var(--muted); font-size: .95rem; line-height: 1.65; }
+
+    /* PANELS / ENGAGEMENTS */
+    .engagement-list { margin-top: 2.5rem; }
+    .engagement-item {
+      display: grid; grid-template-columns: 100px 1fr;
+      gap: 2.5rem; align-items: start;
+      padding: 2rem 0; border-bottom: 1px solid var(--line);
+      transition: padding-left .25s;
+    }
+    .engagement-item:first-child { border-top: 1px solid var(--line); }
+    .engagement-item:hover { padding-left: 1rem; }
+    .engagement-year {
+      font-size: .8rem; letter-spacing: .1em;
+      color: var(--muted); padding-top: .3rem;
+    }
+    .engagement-body h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; font-weight: 400; margin-bottom: .4rem;
+    }
+    .engagement-body p { color: var(--muted); font-size: .95rem; line-height: 1.65; }
+    .engagement-tag {
+      display: inline-block; margin-top: .7rem;
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: .25rem .7rem; border-radius: 2px;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .8rem; color: var(--muted);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .page-hero { padding: 9rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .content-grid { grid-template-columns: 1fr; }
+      .engagement-item { grid-template-columns: 1fr; gap: .5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">MH</a>
+    <a class="nav-back" href="index.html">Back to portfolio</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <p class="page-tag">Majd Hallab</p>
+    <h1>Protection from Sexual Exploitation and Abuse</h1>
+    <p>A personal and professional commitment to safeguarding dignity, accountability, and trust in every program and organization I work with.</p>
+  </div>
+
+  <!-- COMMITMENT -->
+  <section>
+    <div class="section-label reveal">Commitment</div>
+    <h2 class="reveal">Why PSEA matters to me.</h2>
+    <p class="body-text reveal">Throughout my career in humanitarian and development programs, I have witnessed firsthand how <strong>safe programming is not optional</strong> — it is the foundation of everything we do. PSEA is not a compliance checkbox; it is a lived responsibility toward the communities we serve.</p>
+    <p class="body-text reveal">As Programs Manager at DCL Foundation, overseeing large-scale operations across North Lebanon, I have <strong>embedded PSEA principles into team culture, field protocols, and organizational frameworks</strong> to ensure every beneficiary interaction is safe, respectful, and accountable.</p>
+  </section>
+
+  <!-- INITIATIVES -->
+  <section>
+    <div class="section-label reveal">Initiatives</div>
+    <h2 class="reveal">Policies and frameworks developed.</h2>
+    <div class="content-grid reveal">
+      <div class="content-card">
+        <h3>Whistleblower Policy</h3>
+        <p>Developed a comprehensive whistleblower protection policy to ensure staff and beneficiaries can safely report concerns without fear of retaliation.</p>
+      </div>
+      <div class="content-card">
+        <h3>Protection, Safe Identification and Referrals Policy</h3>
+        <p>Designed and implemented a policy to guide safe identification of at-risk individuals and establish clear, confidential referral pathways to appropriate services.</p>
+      </div>
+      <div class="content-card">
+        <h3>Organizational Misconduct Framework</h3>
+        <p>Established a structured misconduct response framework defining procedures, accountabilities, and consequences to ensure consistent and fair handling of all reported cases.</p>
+      </div>
+      <div class="content-card">
+        <h3>PSEA Embedded in Contracts</h3>
+        <p>Integrated PSEA clauses and compliance requirements into all organizational contracts with suppliers, partners, and service providers to extend accountability across all stakeholders.</p>
+      </div>
+      <div class="content-card">
+        <h3>Code of Conduct for Private Sector</h3>
+        <p>Developed a PSEA curriculum and code of conduct tailored for private sector actors, raising awareness and setting clear behavioral standards for non-traditional humanitarian partners.</p>
+      </div>
+      <div class="content-card">
+        <h3>Disability Inclusion Initiatives</h3>
+        <p>Designed and led initiatives to embed disability inclusion principles across programs, ensuring that persons with disabilities receive equitable, dignified, and accessible assistance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANELS AND ENGAGEMENTS -->
+  <section>
+    <div class="section-label reveal">Panels and engagements</div>
+    <h2 class="reveal">Representing Lebanon on the global stage.</h2>
+    <div class="engagement-list">
+
+      <div class="engagement-item reveal">
+        <span class="engagement-year">May 7, 2025</span>
+        <div class="engagement-body">
+          <h3>WFP Executive Board — "Strengthening PSEA through Collaborative Action", Rome</h3>
+          <p>Represented DCL Foundation and Lebanon at the WFP Office of the Executive Director's PSEA event held on 7 May 2025 in Rome, titled <em>Strengthening Protection from Sexual Exploitation and Abuse through Collaborative Action</em>. The event featured two dedicated panel sessions examining how strengthening localization and country-level operations can elevate PSEA efforts across the humanitarian system.</p>
+          <p style="margin-top:.8rem;">As a panelist, contributed field-level insights from Lebanon on how embedding PSEA into NGO operations is fundamental to maintaining community trust — particularly in contexts where free-of-charge assistance creates natural power imbalances that can be exploited. The session was organized by WFP's Gender, Protection and Inclusion (GPI) unit and the Operational Partners Unit (OPU), bringing together NGO partners, UN colleagues, and civil society voices from across the globe.</p>
+          <span class="engagement-tag">Panel · WFP Executive Board · Rome</span>
+        </div>
+      </div>
+
+      <div class="engagement-item reveal">
+        <span class="engagement-year">Dec 11, 2025</span>
+        <div class="engagement-body">
+          <h3>WFP Harmonized PSEA E-Learning — Launch Event, Lebanon</h3>
+          <p>Participated as a speaker at the launch event of WFP's Harmonized PSEA online course on 11 December 2025. Shared perspectives on how embedding PSEA mechanisms into NGO operations is fundamental to maintaining trust with the communities served — and why the course represents a significant step forward for local and national organizations.</p>
+          <p style="margin-top:.8rem;font-style:italic;color:var(--muted);border-left:2px solid var(--accent);padding-left:1.2rem;">"Embedding PSEA mechanisms into NGO operations is fundamental to maintaining trust with the communities we serve. In humanitarian settings, especially when we are providing assistance that is free of charge, whether cash or in-kind, an imbalance of power naturally exists. And that imbalance can unfortunately create incentives for exploitation, including sexual exploitation and abuse."</p>
+          <p style="margin-top:.8rem;">Highlighted how PSEA stops being a checklist and becomes a mindset when it is fully integrated into every stage of the programme cycle — from project design involving protection focal points early, to safe recruitment, community awareness, and accessible reporting channels. Emphasized the value of the Harmonized PSEA Course in giving smaller civil society organizations practical, structured guidance to build capacity at their own pace — giving organizations the confidence to assess their gaps and put the right safeguards in place.</p>
+          <span class="engagement-tag">Speaker · WFP · Lebanon</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Majd Hallab</span>
+    <span>Project Manager · Lebanon</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
