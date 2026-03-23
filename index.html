@@ -93,7 +93,7 @@
     .services .section-label { color: var(--accent); }
     .services .section-label::after { background: var(--accent); }
     .services h2 { color: var(--cream); }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 3.5rem; border: 1px solid #2e2b26; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 3.5rem; border: 1px solid #2e2b26; }
     .service-card { padding: 2.5rem; border-right: 1px solid #2e2b26; transition: background .25s; }
     .service-card:last-child { border-right: none; }
     .service-card:hover { background: #232019; }
@@ -296,16 +296,21 @@
     <div class="services-grid reveal">
       <div class="service-card">
         <div class="service-num">01</div>
+        <h3>Project Management</h3>
+        <p>Leading complex programs from inception to close, ensuring timelines, budgets, quality standards, and stakeholder expectations are met at every stage.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
         <h3>Freelancing</h3>
         <p>End-to-end project management for organizations and businesses, covering scoping, planning, execution, and delivery on time and on budget.</p>
       </div>
       <div class="service-card">
-        <div class="service-num">02</div>
+        <div class="service-num">03</div>
         <h3>Consulting</h3>
         <p>Strategic advisory for NGOs, startups, and businesses navigating complexity, including operational design, stakeholder alignment, and program scale-up.</p>
       </div>
       <div class="service-card">
-        <div class="service-num">03</div>
+        <div class="service-num">04</div>
         <h3>Training and Coaching</h3>
         <p>Practical workshops and one-on-one coaching for project managers and team leads looking to sharpen their execution and leadership skills.</p>
       </div>
@@ -318,44 +323,34 @@
     <h2 class="reveal">Projects I'm proud of.</h2>
     <div class="projects-list">
       <div class="project-item reveal">
-        <span class="project-year">2025 / 26</span>
+        <span class="project-year">2020 / 2026</span>
         <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
         <span class="project-tag">Humanitarian</span>
       </div>
       <div class="project-item reveal">
-        <span class="project-year">2024 / 25</span>
-        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
-        <span class="project-tag">Humanitarian</span>
-      </div>
-      <div class="project-item reveal">
-        <span class="project-year">2023 / 24</span>
+        <span class="project-year">2021 / 2024</span>
         <span class="project-name">In-Kind Assistance Program</span>
         <span class="project-tag">Food Aid</span>
       </div>
       <div class="project-item reveal">
-        <span class="project-year">2022 / 23</span>
-        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
-        <span class="project-tag">Humanitarian</span>
+        <span class="project-year">2023 / 2024</span>
+        <span class="project-name">Life Academy Project</span>
+        <span class="project-tag">Education</span>
       </div>
       <div class="project-item reveal">
-        <span class="project-year">2022 / 23</span>
-        <span class="project-name">In-Kind Assistance Program</span>
-        <span class="project-tag">Food Aid</span>
+        <span class="project-year">2020</span>
+        <span class="project-name">Beirut Blast Emergency Response</span>
+        <span class="project-tag">Emergency</span>
       </div>
       <div class="project-item reveal">
-        <span class="project-year">2021 / 22</span>
-        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
-        <span class="project-tag">Humanitarian</span>
+        <span class="project-year">2020 / 2022</span>
+        <span class="project-name">Beirut Blast Houses Rehabilitation, 300+ houses</span>
+        <span class="project-tag">Rehabilitation</span>
       </div>
       <div class="project-item reveal">
-        <span class="project-year">2021 / 22</span>
-        <span class="project-name">In-Kind Assistance Program</span>
-        <span class="project-tag">Food Aid</span>
-      </div>
-      <div class="project-item reveal">
-        <span class="project-year">2020 / 21</span>
-        <span class="project-name">School Feeding Program, North Lebanon and Akkar</span>
-        <span class="project-tag">Humanitarian</span>
+        <span class="project-year">2019</span>
+        <span class="project-name">Mina Shelter Rehabilitation</span>
+        <span class="project-tag">Shelter</span>
       </div>
     </div>
   </section>
@@ -404,7 +399,7 @@
     </form>
 
     <p class="contact-divider reveal">or reach out directly</p>
-    <a class="contact-email reveal" href="/cdn-cgi/l/email-protection#620a030e0e03000f03080622050f030b0e4c010d0f"><span class="__cf_email__" data-cfemail="167e777a7a77747b777c7256717b777f7a3875797b">[email&#160;protected]</span></a>
+    <a class="contact-email reveal" id="email-link" href="#">Loading...</a>
     <div class="socials reveal">
       <a href="https://www.linkedin.com/in/hallabm/" target="_blank">LinkedIn</a>
       <a href="https://wa.me/96103145013" target="_blank">WhatsApp</a>
@@ -418,8 +413,22 @@
     <span>Project Manager, Lebanon</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) {
-          e.targe
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+    var el = document.getElementById('email-link');
+    el.href = 'mai' + 'lto:hallabmajd' + '@' + 'gmail.com';
+    el.textContent = 'hallabmajd' + '@' + 'gmail.com';
+  </script>
+
+</body>
+</html>
